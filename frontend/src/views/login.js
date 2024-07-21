@@ -1,6 +1,7 @@
 import React from "react";
 import Card from '../components/card';
 import FormGroup from '../components/form-group';
+import {withRouter} from 'react-router-dom'
 
 class Login extends React.Component {
 
@@ -14,6 +15,10 @@ class Login extends React.Component {
         console.log('Senha: ' + this.state.senha);
     }
 
+    prepareCadastrar = () => {
+        this.props.history.push("/cadastro-usuarios")
+    }
+
     render() {
         return (
 
@@ -25,6 +30,7 @@ class Login extends React.Component {
                                 <div className="col-lg-12">
                                     <div className="bs-component">
                                         <fieldset>
+
                                             <FormGroup htmlFor="exampleInputEmail1" label="Email: *">
                                                 <input
                                                     type="email"
@@ -35,6 +41,7 @@ class Login extends React.Component {
                                                     aria-describedby="emailHelp"
                                                     placeholder="Digite o Email" />
                                             </FormGroup>
+
                                             <FormGroup htmlFor="exampleInputPassword1" label="Senha: *"> {/* Corrigido */}
                                                 <input
                                                     type="password"
@@ -44,7 +51,8 @@ class Login extends React.Component {
                                                     id="exampleInputPassword1"
                                                     placeholder="Password" />
                                             </FormGroup>
-                                            <button className="btn btn-lg btn-danger" type="button">Cadastrar</button> {/* Corrigido */}
+                                            
+                                            <button onClick={this.prepareCadastrar} className="btn btn-lg btn-danger" type="button">Cadastrar</button> {/* Corrigido */}
                                             <button onClick={this.entrar} className="btn btn-lg btn-success" type="button">Entrar</button> {/* Corrigido */}
                                         </fieldset>
                                     </div>
@@ -58,4 +66,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
