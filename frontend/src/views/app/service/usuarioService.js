@@ -12,5 +12,9 @@ class UsuarioService extends ApiService{
     obterSaldoPorUsuario(id){
         return this.getObterSaldo(`/${id}/saldo`)
     }
+
+    salvar(usuario){
+        return this.post('', usuario)
+    }
 }
 export default UsuarioService;
