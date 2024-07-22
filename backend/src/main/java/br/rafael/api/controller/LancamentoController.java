@@ -107,7 +107,7 @@ public class LancamentoController {
 	}
 	
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	@PutMapping("{id}/atualiza-status")
 	public ResponseEntity atualizarStatus(@PathVariable("id") Long id, @RequestBody AtualizarStatusDTO dto) {
 		return lancamentoService.obterPorId(id).map( entity -> {
