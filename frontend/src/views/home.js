@@ -7,7 +7,13 @@ class Home extends React.Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8081/api/lancamentos/2/saldo')
+
+        const usuarioLogadoString = localStorage.getItem('_usuario_logado')
+        const usuarioLogado = JSON.parse(usuarioLogadoString)
+
+        console.log(usuarioLogado)
+
+        axios.get(`http://localhost:8081/api/lancamentos/${usuarioLogado.id}/saldo`)
             .then(response => {
                 this.setState({saldo: response.data})
             }).catch(error => {
