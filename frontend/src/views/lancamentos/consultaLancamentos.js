@@ -4,46 +4,56 @@ import Card from "../../components/card";
 import FormGroup from "../../components/form-group";
 import SelectMenu from "../../components/selectMenu";
 import LancamentosTable from "./lancamentosTable";
+import LancamentoService from "../../app/service/lancamentoService";
+import LocalStoreService from "../../app/service/localstorageService";
+import * as messages from '../../components/toastr'
 
 class consultaLancamentos extends React.Component{
 
     state = {
         ano: '',
         mes: '',
-        tipo: ''
+        tipo: '',
+        descricao: '',
+        lancamentos: []
+    }
+
+    constructor(){
+        super();
+        this.service = new LancamentoService();
     }
 
     buscar = () => {
-        console.log(this.state)
+
+        if(!this.state.ano){
+            messages.mostrarErro('O preenchimento do campo Ano é obritório.')
+            return false;
+        }
+
+        const usuarioLogado = LocalStoreService.obterItem('_usuario_logado')
+
+        const lancamentoFiltro = {
+            ano: this.state.ano,
+            mes: this.state.mes,
+            tipo: this.state.tipo,
+            descricao: this.state.descricao,
+            usuario: usuarioLogado.id
+        }
+
+        this.service
+            .consultar(lancamentoFiltro)
+            .then( response => {
+                this.setState({ lancamentos: response.data})
+            }).catch(error => {
+                console.log(error)
+            })
     }
 
     render(){
 
-        const meses = [
-            {label: 'Selecione...', value: ''},
-            {label: 'Janeiro', value: 1},
-            {label: 'Fevereiro', value: 2},
-            {label: 'Março', value: 3},
-            {label: 'Abril', value: 4},
-            {label: 'Maio', value: 5},
-            {label: 'Junho', value: 6},
-            {label: 'Julho', value: 7},
-            {label: 'Agosto', value: 8},
-            {label: 'Setembro', value: 9},
-            {label: 'Outubro', value: 10},
-            {label: 'Novembro', value: 11},
-            {label: 'Dezembro', value: 12}
-        ]
+        const meses = this.service.obterListaMeses();
 
-        const tipos = [
-            { label: 'Selecione...', value: '' },
-            { label: 'Despesa', value: 'DESPESA' },
-            { label: 'Receita', value: 'RECEITA' }
-        ]
-
-        const lancamentos = [
-            {id: 1, descricao: 'Salário', valor: '5000', mes: 1, tipo: 'Receita', status: 'Efetivado'}
-        ]
+        const tipos = this.service.obterListaTipos();
 
         return(
             <Card title="Consulta Lançamentos">
@@ -70,6 +80,17 @@ class consultaLancamentos extends React.Component{
                                             }}
                                             lista={meses} />
                             </FormGroup>
+                            
+                            <FormGroup htmlFor="inputDescricao" label="Descricao: *">
+                                <input type="text"
+                                        id="inputDescricao" 
+                                        className="form-control"
+                                        value={this.state.descricao}
+                                        onChange={e => {
+                                            this.setState({descricao: e.target.value})
+                                        }}
+                                        placeholder="Digite a descrição" />
+                            </FormGroup>
 
                             <FormGroup htmlFor="inputTipo" label="Tipo de lançamento: *">
                                 <SelectMenu id="inputTipo" 
@@ -91,7 +112,7 @@ class consultaLancamentos extends React.Component{
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
-                            <LancamentosTable lancamentos={lancamentos} />
+                            <LancamentosTable lancamentos={this.state.lancamentos} />
                         </div>
                     </div>
                 </div>                
