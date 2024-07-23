@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
 import {withRouter} from 'react-router-dom'
-import UsuarioService from "./app/service/usuarioService";
+import UsuarioService from "../app/service/usuarioService";
 import { mostrarErro, mostrarSucesso } from "../components/toastr";
 
 
@@ -30,7 +30,8 @@ class CadastroUsuario extends React.Component{
 
         if(!this.state.email){
             msgs.push('O campo Email é obrigatório')
-        }else if(!this.state.email.match('/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/')){
+        }
+        if(!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)){
             msgs.push('Informe um Email válido.')
         }
         if(!this.state.senha || !this.state.senhaRepeticao){

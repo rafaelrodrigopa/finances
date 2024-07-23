@@ -3,8 +3,8 @@ import Card from '../components/card';
 import FormGroup from '../components/form-group';
 import {withRouter} from 'react-router-dom'
 import axios from "axios";
-import UsuarioService from "./app/service/usuarioService";
-import LocalStoreService from "./app/service/localstorageService";
+import UsuarioService from "../app/service/usuarioService";
+import LocalStoreService from "../app/service/localstorageService";
 import { mensagemErro, mostrarErro } from "../components/toastr";
 
 class Login extends React.Component {
