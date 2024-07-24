@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line
 export default (props) => {
     
     const options = props.lista.map( (option, index) => {

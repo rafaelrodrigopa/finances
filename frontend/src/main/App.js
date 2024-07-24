@@ -6,9 +6,9 @@ import Navbar from "../components/navbar"
 import 'toastr/build/toastr.css'
 import 'toastr/build/toastr.min.js'
 
-//import 'primereact/resources/themes/nova-accent/theme.css'//
-//import 'primereact/resources/primereact.min.css'
-//import 'primeicons/primeicons.css'
+import 'primereact/resources/themes/nova-accent/theme.css'//
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
 
 
 import { Dialog } from 'primereact/dialog';

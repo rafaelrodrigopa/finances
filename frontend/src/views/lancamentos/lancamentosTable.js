@@ -1,9 +1,14 @@
 import React from "react";
 import currencyFormatter from "currency-formatter";
 
+// eslint-disable-next-line
 export default props => {
 
-    const rows = props.lancamentos.map( lancamento => {
+    //Previne que lint de erro caso seja passado um array vazio
+    const lanc = props.lancamentos || [];
+
+    // eslint-disable-next-line
+    const rows = lanc.map( (lancamento) => {
         return(
             <tr key={lancamento.id}>
                 <td>{lancamento.descricao}</td>
@@ -13,7 +18,7 @@ export default props => {
                 <td>{lancamento.status}</td>
                 <td>
                     <button type="button" className="btn btn-primary" onClick={e => props.editAction(lancamento)}>Editar</button>
-                    <button type="button" className="btn btn-danger" onClick={ e => props.deleteAction(lancamento)}>Deletar</button>
+                    <button type="button" className="btn btn-danger" onClick={ e => props.deleteAction(lancamento.id)}>Deletar</button>
                 </td>
             </tr>
         )
