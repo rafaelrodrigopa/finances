@@ -54,9 +54,8 @@ class consultaLancamentos extends React.Component{
     }
 
     deletar = (lancamento) => {
-        
         this.service
-            .deletar(lancamento)
+            .deletar(lancamento.id)
             .then( response => {
                 const lancamentos = this.state.lancamentos;
                 const index = lancamentos.indexOf(lancamento)
@@ -142,4 +141,3 @@ class consultaLancamentos extends React.Component{
     }
 }
 export default withRouter(consultaLancamentos)
-

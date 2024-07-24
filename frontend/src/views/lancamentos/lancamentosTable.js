@@ -13,7 +13,7 @@ export default props => {
                 <td>{lancamento.status}</td>
                 <td>
                     <button type="button" className="btn btn-primary" onClick={e => props.editAction(lancamento)}>Editar</button>
-                    <button type="button" className="btn btn-danger" onClick={ e => props.deleteAction(lancamento.id)}>Deletar</button>
+                    <button type="button" className="btn btn-danger" onClick={ e => props.deleteAction(lancamento)}>Deletar</button>
                 </td>
             </tr>
         )
