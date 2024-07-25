@@ -74,10 +74,26 @@ class CadastroLancamentos extends React.Component{
 
     // eslint-disable-next-line
     subimit = () => {
+
         const usuarioLogado = LocalStoreService.obterItem('_usuario_logado')
         
         const { descricao,valor,mes,ano,tipo } = this.state;
         const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado.id };
+
+        try {
+            this.service.validar(lancamento)
+        } catch (erro) {
+            
+            //capitura as mensagens de erro
+            const mensagens = erro.mensagens;
+
+            //mostrar os erros caso tenha
+            mensagens.forEach(msg => messages.mostrarErro(msg));
+
+            //encerra o metodo por aqui mesmo
+            return false;
+        }
+       
 
         this.service
             .salvar(lancamento)
