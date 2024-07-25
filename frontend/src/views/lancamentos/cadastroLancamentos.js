@@ -18,7 +18,8 @@ class CadastroLancamentos extends React.Component{
         ano: '',
         tipo: '',
         status: '',
-        usuario: null
+        usuario: null,
+        atualizando: false
     }
 
     constructor(){
@@ -31,25 +32,30 @@ class CadastroLancamentos extends React.Component{
     }
 
     buscarPorId = () => {
+
         const params = this.props.match.params
-        
-        this.state.id = params.id
 
-        if(params.id){
-            this.service.obterPorId(params.id)
-                .then(response => {
+        //A variavel contém o valor do id do lançamento
+        //if(parseInt(params.id)>0){
+
+        this.setState.id = params.id
+
+            if(params.id){
+                this.service.obterPorId(params.id)
+                    .then(response => {
 
 
-                    //Não estava pegando o id, então tive que desestruturar antes de pedir os dados para o setState, 
-                    //excluido o id que já tinha sito passado via parametro url
-                    const { id, ...rest } = response.data;
-                    this.setState({ ...rest });
-                    this.setState({...rest.data})
+                        //Não estava pegando o id, então tive que desestruturar antes de pedir os dados para o setState, 
+                        //excluido o id que já tinha sito passado via parametro url
+                        const { id, ...rest } = response.data;
+                        this.setState({ ...rest });
+                        this.setState({...rest.data, atualizando: true})
 
-                }).catch(erros => {
-                    messages.mostrarErro(erros.response.data)
-                })
-        }
+                    }).catch(erros => {
+                        messages.mostrarErro(erros.response.data)
+                    })
+            }
+        //}
     }
 
     atualizar = () => {
@@ -98,7 +104,7 @@ class CadastroLancamentos extends React.Component{
         const tipos = this.service.obterListaTipos();
 
         return(
-            <Card>
+            <Card title={ this.state.atualizando ? 'Atualização de lançamento' : 'Cadastro de lançamento' }>
                 <div className="row">
                     <div className="col-md-12">
                         <FormGroup id="inputDescricao" label="Descrição: *">
@@ -170,8 +176,11 @@ class CadastroLancamentos extends React.Component{
                     </div>
                     <div className="row">
                         <div className="col-md-6">
-                            <button onClick={this.subimit} className="btn btn-success">Salvar</button>
-                            <button onClick={this.atualizar} className="btn btn-primary">Atualizar</button>
+                            {
+                                this.state.atualizando ?
+                                (<button onClick={this.atualizar} className="btn btn-primary">Atualizar</button>):
+                                (<button onClick={this.subimit} className="btn btn-success">Salvar</button>)
+                            }
                             <button onClick={e => this.props.history.push('/consulta-lancamentos')} className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
