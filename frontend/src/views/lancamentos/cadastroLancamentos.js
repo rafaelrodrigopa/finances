@@ -3,8 +3,10 @@ import Card from "../../components/card";
 import FormGroup from '../../components/form-group'
 import { withRouter } from "react-router-dom";
 import SelectMenu from "../../components/selectMenu";
-
+import * as messages from '../../components/toastr'
 import LancamentoService from "../../app/service/lancamentoService";
+import LocalStoreService from "../../app/service/localstorageService";
+
 
 class CadastroLancamentos extends React.Component{
 
@@ -23,8 +25,24 @@ class CadastroLancamentos extends React.Component{
         this.service = new LancamentoService();
     }
 
+    // eslint-disable-next-line
     subimit = () => {
-        console.log(this.state)
+        const usuarioLogado = LocalStoreService.obterItem('_usuario_logado')
+        
+        const { descricao,valor,mes,ano,tipo } = this.state;
+        const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado.id };
+
+        console.log(lancamento)
+
+        this.service
+            .salvar(lancamento)
+            .then( response => {
+                messages.mostrarSucesso('Lançamento cadastrado com sucesso')
+            })
+            .catch(error => {
+                messages.mostrarErro("Erro ao cadastrar")
+            })
+
     }
 
     handleChange = (event) => {
@@ -66,7 +84,13 @@ class CadastroLancamentos extends React.Component{
                     </div>
                     <div className="col-md-6">
                         <FormGroup id="inputMes" label="Mês: *">
-                            <SelectMenu id="inputMes" lista={meses} className="form-control" />
+                            <SelectMenu id="inputMes" 
+                                        lista={meses} 
+                                        className="form-control"
+                                        name="mes"
+                                        value={this.state.mes}
+                                        onChange={this.handleChange}
+                                        />
                         </FormGroup>
                     </div>
                 </div>

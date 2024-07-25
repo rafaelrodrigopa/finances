@@ -21,14 +21,13 @@ public class LancamentoDTO {
 	public LancamentoDTO(Long id, String descricao, Integer mes, Integer ano, BigDecimal valor, Long usuario,
 			String tipo, String status) {
 		super();
-		this.id = id;
+		
 		this.descricao = descricao;
 		this.mes = mes;
 		this.ano = ano;
 		this.valor = valor;
 		this.usuario = usuario;
 		this.tipo = tipo;
-		this.status = status;
 	}
 
 	public Long getId() {
