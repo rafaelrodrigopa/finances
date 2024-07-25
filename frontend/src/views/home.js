@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import UsuarioService from "../app/service/usuarioService";
 import LocalStoreService from "../app/service/localstorageService";
 class Home extends React.Component{
@@ -37,7 +36,7 @@ class Home extends React.Component{
                 <p>E essa é sua área administrativa, utilize um dos menus ou botões abaixo para navegar pelo sistema.</p>
                 <p className="lead">
                 <a className="btn btn-primary btn-lg" href="#/cadastro-usuarios" role="button"><i className="fa fa-users"></i>  Cadastrar Usuário</a>
-                <a className="btn btn-danger btn-lg" href="https://bootswatch.com/vapor/#" role="button"><i className="fa fa-users"></i>  Cadastrar Lançamento</a>
+                <a className="btn btn-danger btn-lg" href="#/cadastro-lancamentos" role="button"><i className="fa fa-users"></i>  Cadastrar Lançamento</a>
                 </p>
             </div>
         )

@@ -61,6 +61,15 @@ public class LancamentoController {
 		return ResponseEntity.ok(lancamentos);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@GetMapping("{id}")
+	public ResponseEntity obterLancamento(@PathVariable("id") Long id) {
+		return lancamentoService.obterPorId(id)
+					.map(lancamento -> new ResponseEntity(converter(lancamento), HttpStatus.OK))
+					.orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+
+	}
+	
 	@SuppressWarnings({ "unchecked", "rawtypes"})
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody LancamentoDTO dto) {
@@ -139,6 +148,17 @@ public class LancamentoController {
 		.orElseGet( 
 				() -> new ResponseEntity("Lancamento não encontrado na base de dados"
 					,HttpStatus.BAD_REQUEST));
+	}
+	
+	private LancamentoDTO converter(Lancamento lancamento) {
+		return new LancamentoDTO(lancamento.getId(), 
+				                 lancamento.getDescricao(), 
+				                 lancamento.getMes(), 
+				                 lancamento.getAno(), 
+				                 lancamento.getValor(), 
+				                 lancamento.getUsuario().getId(), 
+				                 lancamento.getTipo().name(), 
+				                 lancamento.getStatus().name());
 	}
 	
 	private Lancamento converter(LancamentoDTO dto) {

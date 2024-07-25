@@ -28,6 +28,7 @@ public class LancamentoDTO {
 		this.valor = valor;
 		this.usuario = usuario;
 		this.tipo = tipo;
+		this.status=status;
 	}
 
 	public Long getId() {

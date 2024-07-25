@@ -57,7 +57,7 @@ class consultaLancamentos extends React.Component{
     }
 
     editar = (id) => {
-        console.log('Editando o lançamento', id)
+        this.props.history.push(`/cadastro-lancamentos/${id}`)
     }
 
     abrirConfirmacao = (lancamento) =>{
@@ -93,6 +93,10 @@ class consultaLancamentos extends React.Component{
             }).catch(error => {
                 messages.mostrarErro('Erro ao deletar o lançamento')
             })
+    }
+
+    preparaFormularioCadastro = () => {
+        this.props.history.push('/cadastro-lancamentos')
     }
 
     render(){
@@ -155,7 +159,7 @@ class consultaLancamentos extends React.Component{
                             </FormGroup>
 
                             <button onClick={this.buscar} className="btn btn-lg btn-success" type="button">Buscar</button>
-                            <button className="btn btn-lg btn-danger" type="button">Cadastrar</button>
+                            <button onClick={this.preparaFormularioCadastro} className="btn btn-lg btn-danger" type="button">Cadastrar</button>
 
                         </div>
                     </div>
