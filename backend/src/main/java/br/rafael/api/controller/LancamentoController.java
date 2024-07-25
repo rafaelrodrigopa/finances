@@ -97,7 +97,7 @@ public class LancamentoController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PutMapping("{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity atualizar(@PathVariable Long id, @RequestBody LancamentoDTO dto) {
 		
 		return lancamentoService.obterPorId(id).map( entity -> {

@@ -17,7 +17,8 @@ class CadastroLancamentos extends React.Component{
         mes: '',
         ano: '',
         tipo: '',
-        status: ''
+        status: '',
+        usuario: null
     }
 
     constructor(){
@@ -26,8 +27,43 @@ class CadastroLancamentos extends React.Component{
     }
 
     componentDidMount(){
+        this.buscarPorId();
+    }
+
+    buscarPorId = () => {
         const params = this.props.match.params
-        console.log(params)
+        
+        this.state.id = params.id
+
+        if(params.id){
+            this.service.obterPorId(params.id)
+                .then(response => {
+
+
+                    //Não estava pegando o id, então tive que desestruturar antes de pedir os dados para o setState, 
+                    //excluido o id que já tinha sito passado via parametro url
+                    const { id, ...rest } = response.data;
+                    this.setState({ ...rest });
+                    this.setState({...rest.data})
+
+                }).catch(erros => {
+                    messages.mostrarErro(erros.response.data)
+                })
+        }
+    }
+
+    atualizar = () => {
+        
+        this.service
+            .atualizar(this.state)
+            .then( response => {
+                this.props.history.push('/consulta-lancamentos')
+                messages.mostrarSucesso('Lançamento atualizado com sucesso')
+            })
+            .catch(error => {
+                messages.mostrarErro("Erro ao cadastrar")
+            })
+
     }
 
     // eslint-disable-next-line
@@ -135,6 +171,7 @@ class CadastroLancamentos extends React.Component{
                     <div className="row">
                         <div className="col-md-6">
                             <button onClick={this.subimit} className="btn btn-success">Salvar</button>
+                            <button onClick={this.atualizar} className="btn btn-primary">Atualizar</button>
                             <button onClick={e => this.props.history.push('/consulta-lancamentos')} className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
